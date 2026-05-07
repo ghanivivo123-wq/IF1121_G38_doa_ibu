@@ -9,8 +9,16 @@ warna_pilihan(kuning).
 warna_pilihan(hijau).
 warna_pilihan(biru).
 
-jenis_angka(0). jenis_angka(1). jenis_angka(2). jenis_angka(3). jenis_angka(4). 
-jenis_angka(5). jenis_angka(6). jenis_angka(7). jenis_angka(8). jenis_angka(9).
+jenis_angka(0). 
+jenis_angka(1).
+jenis_angka(2). 
+jenis_angka(3). 
+jenis_angka(4). 
+jenis_angka(5). 
+jenis_angka(6). 
+jenis_angka(7). 
+jenis_angka(8). 
+jenis_angka(9).
 
 jenis_aksi(skip).
 jenis_aksi(reverse).
