@@ -1,5 +1,5 @@
 :- include('fakta.pl').
-:- include('Startgame.pl').
+:- include('startGame.pl').
 :- include('mainkanKartu.pl').
 :- include('lihatKartu.pl').
 :- include('lihatCommand.pl').
