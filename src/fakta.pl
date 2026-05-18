@@ -34,3 +34,5 @@ jenis_wild(wild_draw_four).
 :- dynamic(deck/1).
 :- dynamic(discard_pile/1).
 :- dynamic(temp_kartu/1).
+:- dynamic(status_uni/1).
+:- dynamic(status_tantang/4).
