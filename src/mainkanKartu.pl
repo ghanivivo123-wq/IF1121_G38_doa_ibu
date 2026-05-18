@@ -70,10 +70,25 @@ terapkan_efek(kartu(hitam, wild)) :-
     ganti_giliran(1).
 
 terapkan_efek(kartu(hitam, wild_draw_four)) :-
+    warna_aktif(WarnaLama),
+    discard_pile([_ | TumpukanSisa]), 
+    (   TumpukanSisa = [kartu(_, JenisLama) | _] -> true
+    ;   JenisLama = kosong 
+    ),
     ganti_warna_wild,
-    write('Pemain berikutnya mengambil 4 kartu dan kehilangan giliran.'), nl,
-    hukum_tarik_kartu(4),
-    ganti_giliran(2).
+    giliran(PemainSekarang),
+    urutan_pemain(ListPemain),
+    arah_permainan(Arah),
+    cari_indeks_pemain(PemainSekarang, ListPemain, IndeksSekarang),
+    get_length(ListPemain, JumlahPemain),
+    (   Arah == kanan ->
+        IndeksBaru is (IndeksSekarang + 1) mod JumlahPemain
+    ;   IndeksBaru is (IndeksSekarang - 1) mod JumlahPemain
+    ),
+    ambil_elemen_ke(IndeksBaru, ListPemain, Penantang, _),
+    assertz(status_tantang(Penantang, PemainSekarang, WarnaLama, JenisLama)),
+    write('Pemain berikutnya dapat melakukan perintah tantang. atau ambilKartu.'), nl,
+    ganti_giliran(1).
 
 /*input pergantian kartu*/
 ganti_warna_wild :-
