@@ -2,12 +2,7 @@
 tambah_elemen([], Elemen, [Elemen]).
 tambah_elemen([H|T], Elemen, [H|Hasil]) :-
     tambah_elemen(T, Elemen, Hasil).
-
-get_length([], 0).
-get_length([_|T], N) :-
-    get_length(T, N1),
-    N is N1 + 1.
-
+    
 mainkanKartu(NomorUrutKartu) :-
     permainan_aktif,
     giliran(Pemain),
