@@ -1,8 +1,3 @@
-get_length([], 0).
-get_length([_ | T], N) :-
-    get_length(T, N1),
-    N is N1 + 1.
-
 uni(Nomor) :-
     permainan_aktif,
     giliran(Pemain),
