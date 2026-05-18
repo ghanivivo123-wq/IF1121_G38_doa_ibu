@@ -1,4 +1,4 @@
-/*reset game*/
+/* reset game */
 reset_game :-
     retractall(urutan_pemain(_)),
     retractall(giliran(_)),
@@ -10,7 +10,7 @@ reset_game :-
     retractall(deck(_)),
     retractall(discard_pile(_)).
 
-/*penggunaan random*/
+/* penggunaan random */
 acak_list([], []).
 acak_list(ListAwal, [ElemenTerpilih | SisaDiacak]) :-
     get_length(ListAwal, Panjang),
@@ -49,17 +49,21 @@ tidak_ada_dalam(X, [H|T]) :-
     X \= H,
     tidak_ada_dalam(X, T).
 
+/* jenis_angka: menambahkan definisi yang kurang untuk validasi kartu awal */
+jenis_angka(J) :-
+    cek_member(J, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).
+
 /* gabung_list: gabungkan dua list menjadi satu */
 gabung_list([], L, L).
 gabung_list([H|T], L, [H|Hasil]) :-
-    gabung_list(T, L, Hasil).
+    gather_list = gabung_list(T, L, Hasil).
 
 /* tambah_akhir: tambahkan elemen ke akhir list */
 tambah_akhir([], X, [X]).
 tambah_akhir([H|T], X, [H|Hasil]) :-
     tambah_akhir(T, X, Hasil).
 
-/*pembuatan deck*/
+/* pembuatan deck */
 buat_deck(ShuffledDeck) :-
     kombinasi_kartu([merah, kuning, hijau, biru], 
                     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], DeckAngka),
@@ -91,7 +95,7 @@ pasangkan_wild_4x(_, [], []).
 pasangkan_wild_4x(Warna, [J | Js], [kartu(Warna, J), kartu(Warna, J), kartu(Warna, J), kartu(Warna, J) | SisaKartu]) :-
     pasangkan_wild_4x(Warna, Js, SisaKartu).
 
-/*inisialisasi pemain*/
+/* inisialisasi pemain */
 
 /* baca_nama: baca input nama sebagai atom */
 baca_nama(Nama) :-
@@ -137,7 +141,7 @@ cetak_urutan([H|T]) :-
     write(H), write(' - '), 
     cetak_urutan(T).
 
-/*distribusi kartu*/
+/* distribusi kartu */
 bagi_kartu_pemain([], Deck, Deck).
 
 bagi_kartu_pemain([Pemain | SisaPemain], DeckSekarang, SisaDeck) :-
@@ -145,7 +149,7 @@ bagi_kartu_pemain([Pemain | SisaPemain], DeckSekarang, SisaDeck) :-
     assertz(kartu_pemain(Pemain, Tangan)),
     bagi_kartu_pemain(SisaPemain, DeckBaru, SisaDeck).
 
-/*validasi kartu awal*/
+/* validasi kartu awal */
 tentukan_kartu_awal([kartu(W, J) | SisaDeck], SisaDeck, kartu(W, J)) :-
     jenis_angka(J), !. 
 
@@ -153,7 +157,7 @@ tentukan_kartu_awal([kartu(W, J) | SisaDeck], DeckFinal, KartuAwal) :-
     tambah_akhir(SisaDeck, kartu(W, J), DeckSementara),
     tentukan_kartu_awal(DeckSementara, DeckFinal, KartuAwal). 
 
-/*start game*/
+/* start game */
 startGame :-
     reset_game,
     inisialisasi_jumlah_pemain(Jumlah), nl,
