@@ -5,3 +5,5 @@
 :- include('lihatCommand.pl').
 :- include('cekInfo.pl').
 :- include('ambilKartu.pl').
+:- include('tantang.pl').
+:- include('tangkap.pl').
