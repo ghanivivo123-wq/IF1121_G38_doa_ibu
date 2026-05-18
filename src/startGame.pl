@@ -49,14 +49,10 @@ tidak_ada_dalam(X, [H|T]) :-
     X \= H,
     tidak_ada_dalam(X, T).
 
-/* jenis_angka: menambahkan definisi yang kurang untuk validasi kartu awal */
-jenis_angka(J) :-
-    cek_member(J, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).
-
 /* gabung_list: gabungkan dua list menjadi satu */
 gabung_list([], L, L).
 gabung_list([H|T], L, [H|Hasil]) :-
-    gather_list = gabung_list(T, L, Hasil).
+    gabung_list(T, L, Hasil).
 
 /* tambah_akhir: tambahkan elemen ke akhir list */
 tambah_akhir([], X, [X]).
