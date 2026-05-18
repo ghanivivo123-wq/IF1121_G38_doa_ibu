@@ -1,3 +1,13 @@
+/* Helper: tambah elemen ke akhir list */
+tambah_elemen([], Elemen, [Elemen]).
+tambah_elemen([H|T], Elemen, [H|Hasil]) :-
+    tambah_elemen(T, Elemen, Hasil).
+
+get_length([], 0).
+get_length([_|T], N) :-
+    get_length(T, N1),
+    N is N1 + 1.
+
 mainkanKartu(NomorUrutKartu) :-
     permainan_aktif,
     giliran(Pemain),
@@ -16,19 +26,19 @@ mainkanKartu(_) :-
     write('Permainan belum dimulai atau sudah selesai. Ketik startGame. untuk memulai.'), nl.
 
 /* validasi kartu */
-validasi_kartu(kartu(Warna, _)) :- 
+validasi_kartu(kartu(Warna, _)) :-
     warna_aktif(Warna).
 
-validasi_kartu(kartu(_, Jenis)) :- 
-    discard_top(kartu(_, JenisTop)), 
+validasi_kartu(kartu(_, Jenis)) :-
+    discard_top(kartu(_, JenisTop)),
     Jenis == JenisTop.
 
-validasi_kartu(kartu(hitam, _)). 
+validasi_kartu(kartu(hitam, _)).
 
-/*efek*/
+/* efek */
 proses_kartu_dimainkan(Pemain, SisaTangan, KartuTerpilih) :-
     KartuTerpilih = kartu(Warna, Jenis),
-    format('~w memainkan kartu: ~w-~w.', [Pemain, Warna, Jenis]), nl,
+    write(Pemain), write(' memainkan kartu: '), write(Warna), write('-'), write(Jenis), write('.'), nl,
     retract(kartu_pemain(Pemain, _)),
     assertz(kartu_pemain(Pemain, SisaTangan)),
     retract(discard_top(_)),
@@ -42,7 +52,7 @@ proses_kartu_dimainkan(Pemain, SisaTangan, KartuTerpilih) :-
     ;   true
     ),
     (   SisaTangan == [] ->
-        format('Selamat, ~w memenangkan permainan!', [Pemain]), nl,
+        write('Selamat, '), write(Pemain), write(' memenangkan permainan!'), nl,
         retract(permainan_aktif)
     ;   terapkan_efek(KartuTerpilih)
     ).
@@ -71,9 +81,9 @@ terapkan_efek(kartu(hitam, wild)) :-
 
 terapkan_efek(kartu(hitam, wild_draw_four)) :-
     warna_aktif(WarnaLama),
-    discard_pile([_ | TumpukanSisa]), 
+    discard_pile([_ | TumpukanSisa]),
     (   TumpukanSisa = [kartu(_, JenisLama) | _] -> true
-    ;   JenisLama = kosong 
+    ;   JenisLama = kosong
     ),
     ganti_warna_wild,
     giliran(PemainSekarang),
@@ -90,14 +100,14 @@ terapkan_efek(kartu(hitam, wild_draw_four)) :-
     write('Pemain berikutnya dapat melakukan perintah tantang. atau ambilKartu.'), nl,
     ganti_giliran(1).
 
-/*input pergantian kartu*/
+/* input pergantian warna */
 ganti_warna_wild :-
     write('Pilih warna baru (merah/kuning/hijau/biru) diakhiri dengan titik: '),
     read(WarnaBaru),
     (   warna_biasa(WarnaBaru) ->
         retract(warna_aktif(_)),
         assertz(warna_aktif(WarnaBaru)),
-        format('Warna aktif permainan diubah menjadi ~w.', [WarnaBaru]), nl
+        write('Warna aktif permainan diubah menjadi '), write(WarnaBaru), write('.'), nl
     ;   write('Warna tidak valid! Harap masukkan warna biasa.'), nl,
         ganti_warna_wild
     ).
@@ -121,7 +131,7 @@ ganti_giliran(Langkah) :-
     giliran(PemainSekarang),
     arah_permainan(Arah),
     cari_indeks_pemain(PemainSekarang, ListPemain, IndeksSekarang),
-    length(ListPemain, JumlahPemain),
+    get_length(ListPemain, JumlahPemain),
     (   Arah == kanan ->
         IndeksBaru is (IndeksSekarang + Langkah) mod JumlahPemain
     ;   IndeksBaru is (IndeksSekarang - Langkah) mod JumlahPemain
@@ -129,14 +139,14 @@ ganti_giliran(Langkah) :-
     ambil_elemen_ke(IndeksBaru, ListPemain, PemainBerikutnya, _),
     retract(giliran(PemainSekarang)),
     assertz(giliran(PemainBerikutnya)),
-    format('Giliran ~w.', [PemainBerikutnya]), nl.
+    write('Giliran '), write(PemainBerikutnya), write('.'), nl.
 
 hukum_tarik_kartu(Jumlah) :-
     urutan_pemain(ListPemain),
     giliran(PemainSekarang),
     arah_permainan(Arah),
     cari_indeks_pemain(PemainSekarang, ListPemain, IndeksSekarang),
-    length(ListPemain, JumlahPemain),
+    get_length(ListPemain, JumlahPemain),
     (   Arah == kanan ->
         IndeksKorban is (IndeksSekarang + 1) mod JumlahPemain
     ;   IndeksKorban is (IndeksSekarang - 1) mod JumlahPemain
@@ -151,7 +161,7 @@ tarik_n_kartu(Pemain, N) :-
     kartu_pemain(Pemain, Tangan),
     retract(deck(_)),
     assertz(deck(SisaDeck)),
-    append(Tangan, [KartuTarik], TanganBaru),
+    tambah_elemen(Tangan, KartuTarik, TanganBaru),
     retract(kartu_pemain(Pemain, Tangan)),
     assertz(kartu_pemain(Pemain, TanganBaru)),
     N1 is N - 1,
