@@ -8,7 +8,7 @@ mainkanKartu(NomorUrutKartu) :-
     giliran(Pemain),
     kartu_pemain(Pemain, Tangan),
     Indeks is NomorUrutKartu - 1,
-    (   Indeks >= 0, ambil_elemen_ke(Indeks, Tangan, KartuTerpilih, SisaTangan) ->
+    (   Indeks >= 0, get_element(Indeks, Tangan, KartuTerpilih, SisaTangan) ->
         (   validasi_kartu(KartuTerpilih) ->
             proses_kartu_dimainkan(Pemain, SisaTangan, KartuTerpilih)
         ;   write('Kartu tidak valid! Silakan masukkan pilihan kartu kembali.'), nl
@@ -89,7 +89,7 @@ terapkan_efek(kartu(hitam, wild_draw_four)) :-
         IndeksBaru is (IndeksSekarang + 1) mod JumlahPemain
     ;   IndeksBaru is (IndeksSekarang - 1) mod JumlahPemain
     ),
-    ambil_elemen_ke(IndeksBaru, ListPemain, Penantang, _),
+    get_element(IndeksBaru, ListPemain, Penantang, _),
     assertz(status_tantang(Penantang, PemainSekarang, WarnaLama, JenisLama)),
     write('Pemain berikutnya dapat melakukan perintah tantang. atau ambilKartu.'), nl,
     ganti_giliran(1).
@@ -130,7 +130,7 @@ ganti_giliran(Langkah) :-
         IndeksBaru is (IndeksSekarang + Langkah) mod JumlahPemain
     ;   IndeksBaru is (IndeksSekarang - Langkah) mod JumlahPemain
     ),
-    ambil_elemen_ke(IndeksBaru, ListPemain, PemainBerikutnya, _),
+    get_element(IndeksBaru, ListPemain, PemainBerikutnya, _),
     retract(giliran(PemainSekarang)),
     assertz(giliran(PemainBerikutnya)),
     write('Giliran '), write(PemainBerikutnya), write('.'), nl.
@@ -145,7 +145,7 @@ hukum_tarik_kartu(Jumlah) :-
         IndeksKorban is (IndeksSekarang + 1) mod JumlahPemain
     ;   IndeksKorban is (IndeksSekarang - 1) mod JumlahPemain
     ),
-    ambil_elemen_ke(IndeksKorban, ListPemain, Korban, _),
+    get_element(IndeksKorban, ListPemain, Korban, _),
     tarik_n_kartu(Korban, Jumlah).
 
 tarik_n_kartu(_, 0) :- !.
