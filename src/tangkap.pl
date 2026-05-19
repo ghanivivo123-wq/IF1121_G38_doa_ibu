@@ -1,9 +1,3 @@
-uni(Nomor) :-
-    permainan_aktif,
-    giliran(Pemain),
-    assertz(status_uni(Pemain)),
-    mainkanKartu(Nomor).
-
 tangkap(Target) :-
     permainan_aktif,
     kartu_pemain(Target, Tangan),
