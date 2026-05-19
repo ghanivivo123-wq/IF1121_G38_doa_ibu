@@ -8,3 +8,4 @@
 :- include('ambilKartu.pl').
 :- include('tantang.pl').
 :- include('tangkap.pl').
+:- include('uni.pl').
