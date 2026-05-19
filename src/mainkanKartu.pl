@@ -47,8 +47,7 @@ proses_kartu_dimainkan(Pemain, SisaTangan, KartuTerpilih) :-
     ;   true
     ),
     (   SisaTangan == [] ->
-        write('Selamat, '), write(Pemain), write(' memenangkan permainan!'), nl,
-        retract(permainan_aktif)
+        endGame
     ;   terapkan_efek(KartuTerpilih)
     ).
 
