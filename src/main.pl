@@ -10,3 +10,4 @@
 :- include('tangkap.pl').
 :- include('uni.pl').
 :- include('godsHand.pl').
+:- include('saveLoad.pl').
