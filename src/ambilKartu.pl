@@ -19,4 +19,3 @@ ambilKartu :-
         )
     ;   write('Permainan belum dimulai atau sudah selesai. Ketik startGame. untuk memulai.'), nl
     ), !.
-% halo
