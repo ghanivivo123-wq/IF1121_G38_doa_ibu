@@ -9,3 +9,4 @@
 :- include('tantang.pl').
 :- include('tangkap.pl').
 :- include('uni.pl').
+:- include('godsHand.pl').
