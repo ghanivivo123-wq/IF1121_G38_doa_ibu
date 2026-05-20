@@ -1,0 +1,8 @@
+urutan_pemain:['Ghani','Tata'].
+giliran:'Ghani'.
+discard_top:merah-5.
+warna_aktif:merah.
+arah_permainan:kanan.
+status_UNI:[].
+kartu('Ghani'):[kuning-1,hijau-draw_two,biru-4,hijau-8,hijau-0,hitam-wild,biru-skip].
+kartu('Tata'):[kuning-skip,merah-9,biru-draw_two,merah-skip,hijau-9,kuning-6,merah-0].
