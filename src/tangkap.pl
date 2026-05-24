@@ -1,4 +1,9 @@
 tangkap(Target) :-
+    giliran(PemainSekarang),
+    PemainSekarang == Target,
+    write('Kocak! Kamu tidak bisa menangkap dirimu sendiri.'), nl,
+    !.
+tangkap(Target) :-
     permainan_aktif,
     kartu_pemain(Target, Tangan),
     get_length(Tangan, Jumlah),
